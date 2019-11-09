@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mhg.dao.MyResumMapper">
+  <resultMap id="BaseResultMap" type="com.mhg.pojo.MyResum">
+    <id column="iname" jdbcType="VARCHAR" property="iname" />
+    <result column="isex" jdbcType="VARCHAR" property="isex" />
+    <result column="educate" jdbcType="VARCHAR" property="educate" />
+    <result column="imgpath" jdbcType="VARCHAR" property="imgpath" />
+    <result column="nation" jdbcType="VARCHAR" property="nation" />
+    <result column="health" jdbcType="VARCHAR" property="health" />
+    <result column="majortype" jdbcType="VARCHAR" property="majortype" />
+    <result column="major" jdbcType="VARCHAR" property="major" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="marry" jdbcType="VARCHAR" property="marry" />
+    <result column="gradutedate" jdbcType="DATE" property="gradutedate" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="faculty" jdbcType="VARCHAR" property="faculty" />
+    <result column="school" jdbcType="VARCHAR" property="school" />
+    <result column="cplevel" jdbcType="VARCHAR" property="cplevel" />
+    <result column="mypage" jdbcType="VARCHAR" property="mypage" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="qqnum" jdbcType="VARCHAR" property="qqnum" />
+    <result column="weixin" jdbcType="VARCHAR" property="weixin" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="findjob" jdbcType="VARCHAR" property="findjob" />
+    <result column="technology" jdbcType="VARCHAR" property="technology" />
+    <result column="devtool" jdbcType="VARCHAR" property="devtool" />
+    <result column="eduback" jdbcType="VARCHAR" property="eduback" />
+    <result column="english" jdbcType="VARCHAR" property="english" />
+    <result column="project" jdbcType="VARCHAR" property="project" />
+    <result column="object" jdbcType="VARCHAR" property="object" />
+    <result column="evaluation" jdbcType="VARCHAR" property="evaluation" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    iname, isex, educate, imgpath, nation, health, majortype, major, province, marry, 
+    gradutedate, address, birthday, faculty, school, cplevel, mypage, phone, qqnum, weixin, 
+    email, findjob, technology, devtool, eduback, english, project, object, evaluation
+  </sql>
+
+    <select id="selectResum" resultType="com.mhg.pojo.MyResum">
+        select * from myresum limit 0,1
+    </select>
+
+    <select id="findById1" parameterType="java.lang.String" resultType="com.mhg.pojo.MyResum">
+        select * from myresum where iname=#{iname}
+    </select>
+
+    <select id="selectAllIname" resultType="java.lang.String">
+        select iname from myresum
+    </select>
+
+  <select id="selectByExample" parameterType="com.mhg.pojo.MyResumExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from myresum
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from myresum
+    where iname = #{iname,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from myresum
+    where iname = #{iname,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mhg.pojo.MyResumExample">
+    delete from myresum
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mhg.pojo.MyResum">
+    insert into myresum (iname, isex, educate, 
+      imgpath, nation, health, 
+      majortype, major, province, 
+      marry, gradutedate, address, 
+      birthday, faculty, school, 
+      cplevel, mypage, phone, 
+      qqnum, weixin, email, 
+      findjob, technology, devtool, 
+      eduback, english, project, 
+      object, evaluation)
+    values (#{iname,jdbcType=VARCHAR}, #{isex,jdbcType=VARCHAR}, #{educate,jdbcType=VARCHAR}, 
+      #{imgpath,jdbcType=VARCHAR}, #{nation,jdbcType=VARCHAR}, #{health,jdbcType=VARCHAR}, 
+      #{majortype,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+      #{marry,jdbcType=VARCHAR}, #{gradutedate,jdbcType=DATE}, #{address,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=DATE}, #{faculty,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, 
+      #{cplevel,jdbcType=VARCHAR}, #{mypage,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{qqnum,jdbcType=VARCHAR}, #{weixin,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{findjob,jdbcType=VARCHAR}, #{technology,jdbcType=VARCHAR}, #{devtool,jdbcType=VARCHAR}, 
+      #{eduback,jdbcType=VARCHAR}, #{english,jdbcType=VARCHAR}, #{project,jdbcType=VARCHAR}, 
+      #{object,jdbcType=VARCHAR}, #{evaluation,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mhg.pojo.MyResum">
+    insert into myresum
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="iname != null">
+        iname,
+      </if>
+      <if test="isex != null">
+        isex,
+      </if>
+      <if test="educate != null">
+        educate,
+      </if>
+      <if test="imgpath != null">
+        imgpath,
+      </if>
+      <if test="nation != null">
+        nation,
+      </if>
+      <if test="health != null">
+        health,
+      </if>
+      <if test="majortype != null">
+        majortype,
+      </if>
+      <if test="major != null">
+        major,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="marry != null">
+        marry,
+      </if>
+      <if test="gradutedate != null">
+        gradutedate,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="faculty != null">
+        faculty,
+      </if>
+      <if test="school != null">
+        school,
+      </if>
+      <if test="cplevel != null">
+        cplevel,
+      </if>
+      <if test="mypage != null">
+        mypage,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="qqnum != null">
+        qqnum,
+      </if>
+      <if test="weixin != null">
+        weixin,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="findjob != null">
+        findjob,
+      </if>
+      <if test="technology != null">
+        technology,
+      </if>
+      <if test="devtool != null">
+        devtool,
+      </if>
+      <if test="eduback != null">
+        eduback,
+      </if>
+      <if test="english != null">
+        english,
+      </if>
+      <if test="project != null">
+        project,
+      </if>
+      <if test="object != null">
+        object,
+      </if>
+      <if test="evaluation != null">
+        evaluation,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="iname != null">
+        #{iname,jdbcType=VARCHAR},
+      </if>
+      <if test="isex != null">
+        #{isex,jdbcType=VARCHAR},
+      </if>
+      <if test="educate != null">
+        #{educate,jdbcType=VARCHAR},
+      </if>
+      <if test="imgpath != null">
+        #{imgpath,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null">
+        #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="health != null">
+        #{health,jdbcType=VARCHAR},
+      </if>
+      <if test="majortype != null">
+        #{majortype,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null">
+        #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="marry != null">
+        #{marry,jdbcType=VARCHAR},
+      </if>
+      <if test="gradutedate != null">
+        #{gradutedate,jdbcType=DATE},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="faculty != null">
+        #{faculty,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null">
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="cplevel != null">
+        #{cplevel,jdbcType=VARCHAR},
+      </if>
+      <if test="mypage != null">
+        #{mypage,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="qqnum != null">
+        #{qqnum,jdbcType=VARCHAR},
+      </if>
+      <if test="weixin != null">
+        #{weixin,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="findjob != null">
+        #{findjob,jdbcType=VARCHAR},
+      </if>
+      <if test="technology != null">
+        #{technology,jdbcType=VARCHAR},
+      </if>
+      <if test="devtool != null">
+        #{devtool,jdbcType=VARCHAR},
+      </if>
+      <if test="eduback != null">
+        #{eduback,jdbcType=VARCHAR},
+      </if>
+      <if test="english != null">
+        #{english,jdbcType=VARCHAR},
+      </if>
+      <if test="project != null">
+        #{project,jdbcType=VARCHAR},
+      </if>
+      <if test="object != null">
+        #{object,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluation != null">
+        #{evaluation,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mhg.pojo.MyResumExample" resultType="java.lang.Long">
+    select count(*) from myresum
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update myresum
+    <set>
+      <if test="record.iname != null">
+        iname = #{record.iname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isex != null">
+        isex = #{record.isex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educate != null">
+        educate = #{record.educate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imgpath != null">
+        imgpath = #{record.imgpath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nation != null">
+        nation = #{record.nation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.health != null">
+        health = #{record.health,jdbcType=VARCHAR},
+      </if>
+      <if test="record.majortype != null">
+        majortype = #{record.majortype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.major != null">
+        major = #{record.major,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null">
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.marry != null">
+        marry = #{record.marry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gradutedate != null">
+        gradutedate = #{record.gradutedate,jdbcType=DATE},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null">
+        birthday = #{record.birthday,jdbcType=DATE},
+      </if>
+      <if test="record.faculty != null">
+        faculty = #{record.faculty,jdbcType=VARCHAR},
+      </if>
+      <if test="record.school != null">
+        school = #{record.school,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cplevel != null">
+        cplevel = #{record.cplevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mypage != null">
+        mypage = #{record.mypage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qqnum != null">
+        qqnum = #{record.qqnum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weixin != null">
+        weixin = #{record.weixin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.findjob != null">
+        findjob = #{record.findjob,jdbcType=VARCHAR},
+      </if>
+      <if test="record.technology != null">
+        technology = #{record.technology,jdbcType=VARCHAR},
+      </if>
+      <if test="record.devtool != null">
+        devtool = #{record.devtool,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eduback != null">
+        eduback = #{record.eduback,jdbcType=VARCHAR},
+      </if>
+      <if test="record.english != null">
+        english = #{record.english,jdbcType=VARCHAR},
+      </if>
+      <if test="record.project != null">
+        project = #{record.project,jdbcType=VARCHAR},
+      </if>
+      <if test="record.object != null">
+        object = #{record.object,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evaluation != null">
+        evaluation = #{record.evaluation,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update myresum
+    set iname = #{record.iname,jdbcType=VARCHAR},
+      isex = #{record.isex,jdbcType=VARCHAR},
+      educate = #{record.educate,jdbcType=VARCHAR},
+      imgpath = #{record.imgpath,jdbcType=VARCHAR},
+      nation = #{record.nation,jdbcType=VARCHAR},
+      health = #{record.health,jdbcType=VARCHAR},
+      majortype = #{record.majortype,jdbcType=VARCHAR},
+      major = #{record.major,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
+      marry = #{record.marry,jdbcType=VARCHAR},
+      gradutedate = #{record.gradutedate,jdbcType=DATE},
+      address = #{record.address,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=DATE},
+      faculty = #{record.faculty,jdbcType=VARCHAR},
+      school = #{record.school,jdbcType=VARCHAR},
+      cplevel = #{record.cplevel,jdbcType=VARCHAR},
+      mypage = #{record.mypage,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      qqnum = #{record.qqnum,jdbcType=VARCHAR},
+      weixin = #{record.weixin,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      findjob = #{record.findjob,jdbcType=VARCHAR},
+      technology = #{record.technology,jdbcType=VARCHAR},
+      devtool = #{record.devtool,jdbcType=VARCHAR},
+      eduback = #{record.eduback,jdbcType=VARCHAR},
+      english = #{record.english,jdbcType=VARCHAR},
+      project = #{record.project,jdbcType=VARCHAR},
+      object = #{record.object,jdbcType=VARCHAR},
+      evaluation = #{record.evaluation,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mhg.pojo.MyResum">
+    update myresum
+    <set>
+      <if test="isex != null">
+        isex = #{isex,jdbcType=VARCHAR},
+      </if>
+      <if test="educate != null">
+        educate = #{educate,jdbcType=VARCHAR},
+      </if>
+      <if test="imgpath != null">
+        imgpath = #{imgpath,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null">
+        nation = #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="health != null">
+        health = #{health,jdbcType=VARCHAR},
+      </if>
+      <if test="majortype != null">
+        majortype = #{majortype,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null">
+        major = #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="marry != null">
+        marry = #{marry,jdbcType=VARCHAR},
+      </if>
+      <if test="gradutedate != null">
+        gradutedate = #{gradutedate,jdbcType=DATE},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="faculty != null">
+        faculty = #{faculty,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null">
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="cplevel != null">
+        cplevel = #{cplevel,jdbcType=VARCHAR},
+      </if>
+      <if test="mypage != null">
+        mypage = #{mypage,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="qqnum != null">
+        qqnum = #{qqnum,jdbcType=VARCHAR},
+      </if>
+      <if test="weixin != null">
+        weixin = #{weixin,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="findjob != null">
+        findjob = #{findjob,jdbcType=VARCHAR},
+      </if>
+      <if test="technology != null">
+        technology = #{technology,jdbcType=VARCHAR},
+      </if>
+      <if test="devtool != null">
+        devtool = #{devtool,jdbcType=VARCHAR},
+      </if>
+      <if test="eduback != null">
+        eduback = #{eduback,jdbcType=VARCHAR},
+      </if>
+      <if test="english != null">
+        english = #{english,jdbcType=VARCHAR},
+      </if>
+      <if test="project != null">
+        project = #{project,jdbcType=VARCHAR},
+      </if>
+      <if test="object != null">
+        object = #{object,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluation != null">
+        evaluation = #{evaluation,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where iname = #{iname,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mhg.pojo.MyResum">
+    update myresum
+    set isex = #{isex,jdbcType=VARCHAR},
+      educate = #{educate,jdbcType=VARCHAR},
+      imgpath = #{imgpath,jdbcType=VARCHAR},
+      nation = #{nation,jdbcType=VARCHAR},
+      health = #{health,jdbcType=VARCHAR},
+      majortype = #{majortype,jdbcType=VARCHAR},
+      major = #{major,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      marry = #{marry,jdbcType=VARCHAR},
+      gradutedate = #{gradutedate,jdbcType=DATE},
+      address = #{address,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      faculty = #{faculty,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR},
+      cplevel = #{cplevel,jdbcType=VARCHAR},
+      mypage = #{mypage,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      qqnum = #{qqnum,jdbcType=VARCHAR},
+      weixin = #{weixin,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      findjob = #{findjob,jdbcType=VARCHAR},
+      technology = #{technology,jdbcType=VARCHAR},
+      devtool = #{devtool,jdbcType=VARCHAR},
+      eduback = #{eduback,jdbcType=VARCHAR},
+      english = #{english,jdbcType=VARCHAR},
+      project = #{project,jdbcType=VARCHAR},
+      object = #{object,jdbcType=VARCHAR},
+      evaluation = #{evaluation,jdbcType=VARCHAR}
+    where iname = #{iname,jdbcType=VARCHAR}
+  </update>
+</mapper>

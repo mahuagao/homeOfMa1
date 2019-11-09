@@ -1,0 +1,50 @@
+asp.netC#+jquery1.4.1 +ajax留言板程序说明
+
+采用asp.net C#+ jquery1.4.1 +ajax的实现 
+主要用aspx文件请求 还可以用ashx处理 ajax返回类型也很多
+如：  
+dataType: "xml",
+
+dataType: "json",
+其实可区分为三种
+
+Text：“text/plain“;
+XML：“application/xml“;
+JSON：“application/json“.
+
+dataType为xml的时候，response.Write(string)中的字符串一定要符合xml的格式，
+为json的时候，response.Write(string)中的字符串一定要符合json的格式为否则会出现解析错误，
+这个和aspx页是一样的。
+
+如果要使用session的话，在handler的代码中添加System.Web.SessionState的引用，
+并让这个handler继承IRequiresSessionState接口，一定要继承这个接口，否则会出错的。
+
+
+以上本人简单总结
+只有用使用到它才能感觉到很奇妙
+
+主要jquery ajax静态页面查询添加 数据无刷新效果
+
+数据库采用的sql2008 你也可以选择2000、2005 等mysql数据库
+数据库文本 在App_Data中 agebook_database.sql
+打开.sql文件并按照说明运行它即可,如运行不成功请可以自己打开sql服务管理器手动添加表。
+如果不想执行sql语句里面有自带的sql2008R2数据库直接附加数据也行
+
+
+2013-08-22
+
+1、新增ajax无刷新分页类似留言板样例
+
+2013-10-12
+
+1、新增留言前台页面div+css
+
+2、新增留言后台管理/以及回复删除搜索等
+
+3、新增编辑器kindeditor富编辑器
+
+本留言板使用方法好多网友拿过去不会打开 用vs2005以上版本或者放到支持.net2.0的空间 得创建数据库这版本应该2000以上都Ok 并修改连接
+然后直接打开index.html即可
+
+
+对初学者很有帮助 如有不懂地方可以加我QQ:709047174

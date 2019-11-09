@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mhg.dao.MyDocumentMapper">
+  <resultMap id="BaseResultMap" type="com.mhg.pojo.MyDocument">
+    <id column="did" jdbcType="BIGINT" property="did" />
+    <result column="docname" jdbcType="VARCHAR" property="docname" />
+    <result column="docsize" jdbcType="VARCHAR" property="docsize" />
+    <result column="docpath" jdbcType="VARCHAR" property="docpath" />
+    <result column="uplodate" jdbcType="DATE" property="uplodate" />
+    <result column="scannum" jdbcType="BIGINT" property="scannum" />
+    <result column="downnum" jdbcType="BIGINT" property="downnum" />
+    <result column="modifydate" jdbcType="DATE" property="modifydate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    did, docname, docsize, docpath, uplodate, scannum, downnum, modifydate
+  </sql>
+
+    <select id="selectAll" resultType="com.mhg.pojo.MyDocument">
+        select * from mydocument
+    </select>
+
+  <select id="selectByExample" parameterType="com.mhg.pojo.MyDocumentExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mydocument
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mydocument
+    where did = #{did,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from mydocument
+    where did = #{did,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mhg.pojo.MyDocumentExample">
+    delete from mydocument
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mhg.pojo.MyDocument">
+    insert into mydocument (did, docname, docsize, 
+      docpath, uplodate, scannum, 
+      downnum, modifydate)
+    values (#{did,jdbcType=BIGINT}, #{docname,jdbcType=VARCHAR}, #{docsize,jdbcType=VARCHAR}, 
+      #{docpath,jdbcType=VARCHAR}, #{uplodate,jdbcType=DATE}, #{scannum,jdbcType=BIGINT}, 
+      #{downnum,jdbcType=BIGINT}, #{modifydate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mhg.pojo.MyDocument">
+    insert into mydocument
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="did != null">
+        did,
+      </if>
+      <if test="docname != null">
+        docname,
+      </if>
+      <if test="docsize != null">
+        docsize,
+      </if>
+      <if test="docpath != null">
+        docpath,
+      </if>
+      <if test="uplodate != null">
+        uplodate,
+      </if>
+      <if test="scannum != null">
+        scannum,
+      </if>
+      <if test="downnum != null">
+        downnum,
+      </if>
+      <if test="modifydate != null">
+        modifydate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="did != null">
+        #{did,jdbcType=BIGINT},
+      </if>
+      <if test="docname != null">
+        #{docname,jdbcType=VARCHAR},
+      </if>
+      <if test="docsize != null">
+        #{docsize,jdbcType=VARCHAR},
+      </if>
+      <if test="docpath != null">
+        #{docpath,jdbcType=VARCHAR},
+      </if>
+      <if test="uplodate != null">
+        #{uplodate,jdbcType=DATE},
+      </if>
+      <if test="scannum != null">
+        #{scannum,jdbcType=BIGINT},
+      </if>
+      <if test="downnum != null">
+        #{downnum,jdbcType=BIGINT},
+      </if>
+      <if test="modifydate != null">
+        #{modifydate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mhg.pojo.MyDocumentExample" resultType="java.lang.Long">
+    select count(*) from mydocument
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update mydocument
+    <set>
+      <if test="record.did != null">
+        did = #{record.did,jdbcType=BIGINT},
+      </if>
+      <if test="record.docname != null">
+        docname = #{record.docname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docsize != null">
+        docsize = #{record.docsize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docpath != null">
+        docpath = #{record.docpath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uplodate != null">
+        uplodate = #{record.uplodate,jdbcType=DATE},
+      </if>
+      <if test="record.scannum != null">
+        scannum = #{record.scannum,jdbcType=BIGINT},
+      </if>
+      <if test="record.downnum != null">
+        downnum = #{record.downnum,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifydate != null">
+        modifydate = #{record.modifydate,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update mydocument
+    set did = #{record.did,jdbcType=BIGINT},
+      docname = #{record.docname,jdbcType=VARCHAR},
+      docsize = #{record.docsize,jdbcType=VARCHAR},
+      docpath = #{record.docpath,jdbcType=VARCHAR},
+      uplodate = #{record.uplodate,jdbcType=DATE},
+      scannum = #{record.scannum,jdbcType=BIGINT},
+      downnum = #{record.downnum,jdbcType=BIGINT},
+      modifydate = #{record.modifydate,jdbcType=DATE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mhg.pojo.MyDocument">
+    update mydocument
+    <set>
+      <if test="docname != null">
+        docname = #{docname,jdbcType=VARCHAR},
+      </if>
+      <if test="docsize != null">
+        docsize = #{docsize,jdbcType=VARCHAR},
+      </if>
+      <if test="docpath != null">
+        docpath = #{docpath,jdbcType=VARCHAR},
+      </if>
+      <if test="uplodate != null">
+        uplodate = #{uplodate,jdbcType=DATE},
+      </if>
+      <if test="scannum != null">
+        scannum = #{scannum,jdbcType=BIGINT},
+      </if>
+      <if test="downnum != null">
+        downnum = #{downnum,jdbcType=BIGINT},
+      </if>
+      <if test="modifydate != null">
+        modifydate = #{modifydate,jdbcType=DATE},
+      </if>
+    </set>
+    where did = #{did,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mhg.pojo.MyDocument">
+    update mydocument
+    set docname = #{docname,jdbcType=VARCHAR},
+      docsize = #{docsize,jdbcType=VARCHAR},
+      docpath = #{docpath,jdbcType=VARCHAR},
+      uplodate = #{uplodate,jdbcType=DATE},
+      scannum = #{scannum,jdbcType=BIGINT},
+      downnum = #{downnum,jdbcType=BIGINT},
+      modifydate = #{modifydate,jdbcType=DATE}
+    where did = #{did,jdbcType=BIGINT}
+  </update>
+</mapper>

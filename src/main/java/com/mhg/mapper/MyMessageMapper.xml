@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mhg.dao.MyMessageMapper">
+  <resultMap id="BaseResultMap" type="com.mhg.pojo.MyMessage">
+    <id column="meid" jdbcType="INTEGER" property="meid" />
+    <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="souip" jdbcType="VARCHAR" property="souip" />
+    <result column="messdate" jdbcType="TIMESTAMP" property="messdate" />
+    <result column="dear" jdbcType="VARCHAR" property="dear" />
+  </resultMap>
+
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    meid, message, souip, messdate, dear
+  </sql>
+
+    <select id="selectAll" resultType="com.mhg.pojo.MyMessage">
+        select * from mymessage order by meid desc
+    </select>
+
+  <select id="selectByExample" parameterType="com.mhg.pojo.MyMessageExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mymessage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mymessage
+    where meid = #{meid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mymessage
+    where meid = #{meid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mhg.pojo.MyMessageExample">
+    delete from mymessage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mhg.pojo.MyMessage">
+    insert into mymessage (meid, message, souip, 
+      messdate, dear)
+    values (#{meid,jdbcType=INTEGER}, #{message,jdbcType=VARCHAR}, #{souip,jdbcType=VARCHAR}, 
+      #{messdate,jdbcType=TIMESTAMP}, #{dear,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mhg.pojo.MyMessage">
+    insert into mymessage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="meid != null">
+        meid,
+      </if>
+      <if test="message != null">
+        message,
+      </if>
+      <if test="souip != null">
+        souip,
+      </if>
+      <if test="messdate != null">
+        messdate,
+      </if>
+      <if test="dear != null">
+        dear,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="meid != null">
+        #{meid,jdbcType=INTEGER},
+      </if>
+      <if test="message != null">
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="souip != null">
+        #{souip,jdbcType=VARCHAR},
+      </if>
+      <if test="messdate != null">
+        #{messdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dear != null">
+        #{dear,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mhg.pojo.MyMessageExample" resultType="java.lang.Long">
+    select count(*) from mymessage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update mymessage
+    <set>
+      <if test="record.meid != null">
+        meid = #{record.meid,jdbcType=INTEGER},
+      </if>
+      <if test="record.message != null">
+        message = #{record.message,jdbcType=VARCHAR},
+      </if>
+      <if test="record.souip != null">
+        souip = #{record.souip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.messdate != null">
+        messdate = #{record.messdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.dear != null">
+        dear = #{record.dear,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update mymessage
+    set meid = #{record.meid,jdbcType=INTEGER},
+      message = #{record.message,jdbcType=VARCHAR},
+      souip = #{record.souip,jdbcType=VARCHAR},
+      messdate = #{record.messdate,jdbcType=TIMESTAMP},
+      dear = #{record.dear,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mhg.pojo.MyMessage">
+    update mymessage
+    <set>
+      <if test="message != null">
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="souip != null">
+        souip = #{souip,jdbcType=VARCHAR},
+      </if>
+      <if test="messdate != null">
+        messdate = #{messdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dear != null">
+        dear = #{dear,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where meid = #{meid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mhg.pojo.MyMessage">
+    update mymessage
+    set message = #{message,jdbcType=VARCHAR},
+      souip = #{souip,jdbcType=VARCHAR},
+      messdate = #{messdate,jdbcType=TIMESTAMP},
+      dear = #{dear,jdbcType=VARCHAR}
+    where meid = #{meid,jdbcType=INTEGER}
+  </update>
+</mapper>
